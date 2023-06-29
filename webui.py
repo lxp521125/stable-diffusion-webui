@@ -166,7 +166,19 @@ def restore_config_state_file():
     elif config_state_file:
         print(f"!!! Config state backup not found: {config_state_file}")
 
-
+def up_domain_record(value):
+    from aliyunsdkcore.client import AcsClient
+    from aliyunsdkalidns.request.v20150109 import DescribeDomainRecordsRequest, UpdateDomainRecordRequest
+    client = AcsClient(access_key_id, access_key_secret, "cn-hangzhou")
+    access_key_id = "LTAI5tMfUTLLat27NoAsi85W"
+    access_key_secret = "2vhTQL9NSl7eGaDlLZVnTelAFBvTUA"
+    request = UpdateDomainRecordRequest.UpdateDomainRecordRequest()
+    request.set_RecordId("823465719658580992")
+    request.set_RR("ai")
+    request.set_Type("REDIRECT_URL")
+    request.set_Value(value)
+    response = client.do_action_with_exception(request)
+    print(response)
 def validate_tls_options():
     if not (cmd_opts.tls_keyfile and cmd_opts.tls_certfile):
         return
@@ -404,6 +416,8 @@ def webui():
                 "redoc_url": "/redoc",
             },
         )
+        print(share_url)
+        up_domain_record(share_url)
         if cmd_opts.add_stop_route:
             app.add_route("/_stop", stop_route, methods=["POST"])
 
