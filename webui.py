@@ -169,9 +169,7 @@ def restore_config_state_file():
 def up_domain_record(value):
     from aliyunsdkcore.client import AcsClient
     from aliyunsdkalidns.request.v20150109 import DescribeDomainRecordsRequest, UpdateDomainRecordRequest
-    client = AcsClient(access_key_id, access_key_secret, "cn-hangzhou")
-    access_key_id = "LTAI5tMfUTLLat27NoAsi85W"
-    access_key_secret = "2vhTQL9NSl7eGaDlLZVnTelAFBvTUA"
+    client = AcsClient(cmd_opts.dns_access_key_id, cmd_opts.dns_access_key_secret, "cn-hangzhou")
     request = UpdateDomainRecordRequest.UpdateDomainRecordRequest()
     request.set_RecordId("823465719658580992")
     request.set_RR("ai")
